@@ -3,37 +3,86 @@
 <head>
     <title>Hope Valley Weather</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .day {
-            margin-bottom: 20px;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        h2 { margin-top: 40px; }
+
         .error {
-            background-color: #ffe0e0;
+            background: #ffe0e0;
             border: 1px solid #cc0000;
             padding: 15px;
             color: #900;
         }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: center;
+        }
+
+        th {
+            background: #f0f0f0;
+            position: sticky;
+            top: 0;
+        }
     </style>
 </head>
 <body>
-    <h1>7-Day Weather Forecast for Hope Valley, UK</h1>
 
-    {% if error %}
-        <div class="error">
-            <strong>Error loading weather data:</strong><br>
-            {{ error }}
-        </div>
-    {% else %}
-        {% for d in forecast %}
-            <div class="day">
-                <h3>{{ d.date }}</h3>
-                <p><strong>Temperature:</strong> {{ d.temp_min }}°C – {{ d.temp_max }}°C</p>
-                <p><strong>Wind Speed:</strong> {{ d.wind_speed }} km/h</p>
-                <p><strong>Rain:</strong> {{ d.rain }} mm</p>
-            </div>
-        {% endfor %}
-    {% endif %}
+<h1>Hope Valley Weather (Open-Meteo)</h1>
+
+{% if error %}
+    <div class="error">
+        <strong>Error loading weather data:</strong><br>
+        {{ error }}
+    </div>
+{% else %}
+
+<h2>Current Conditions</h2>
+<ul>
+    <li><strong>Temperature:</strong> {{ current.temperature_2m }} °C</li>
+    <li><strong>Feels Like:</strong> {{ current.apparent_temperature }} °C</li>
+    <li><strong>Wind Speed (10m):</strong> {{ current.wind_speed_10m }} km/h</li>
+    <li><strong>Wind Direction:</strong> {{ current.wind_direction_10m }}°</li>
+    <li><strong>Wind Gusts:</strong> {{ current.wind_gusts_10m }} km/h</li>
+    <li><strong>Precipitation:</strong> {{ current.precipitation }} mm</li>
+</ul>
+
+<h2>Hourly Forecast</h2>
+<table>
+    <tr>
+        <th>Time</th>
+        <th>Temp (°C)</th>
+        <th>Feels (°C)</th>
+        <th>Precip %</th>
+        <th>Precip (mm)</th>
+        <th>Wind 10m</th>
+        <th>Wind 180m</th>
+        <th>Dir 10m</th>
+        <th>Dir 180m</th>
+    </tr>
+
+    {% for h in hourly %}
+    <tr>
+        <td>{{ h.time }}</td>
+        <td>{{ h.temperature }}</td>
+        <td>{{ h.apparent_temperature }}</td>
+        <td>{{ h.precip_prob }}</td>
+        <td>{{ h.precip }}</td>
+        <td>{{ h.wind_10m }}</td>
+        <td>{{ h.wind_180m }}</td>
+        <td>{{ h.wind_dir_10m }}°</td>
+        <td>{{ h.wind_dir_180m }}°</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endif %}
+
 </body>
 </html>
