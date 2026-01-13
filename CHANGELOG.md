@@ -1,3 +1,15 @@
+# v0.0.5 (Tue Jan 13 2026)
+
+#### 🐛 Bug Fix
+
+- Wxbot1 [#1](https://github.com/Hedgehog-Aviation/container-fxjzmxe/pull/1) ([@Hedgehog-Aviation](https://github.com/Hedgehog-Aviation))
+
+#### Authors: 1
+
+- [@Hedgehog-Aviation](https://github.com/Hedgehog-Aviation)
+
+---
+
 # v0.0.4 (Tue Jan 13 2026)
 
 #### ⚠️ Pushed to `main`
