@@ -1,3 +1,15 @@
+# v0.0.3 (Tue Jan 13 2026)
+
+#### ⚠️ Pushed to `main`
+
+- Update header and content in index.html ([@Hedgehog-Aviation](https://github.com/Hedgehog-Aviation))
+
+#### Authors: 1
+
+- [@Hedgehog-Aviation](https://github.com/Hedgehog-Aviation)
+
+---
+
 # v0.0.2 (Tue Jan 13 2026)
 
 #### ⚠️ Pushed to `main`
