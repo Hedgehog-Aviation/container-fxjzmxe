@@ -1,3 +1,15 @@
+# v0.0.7 (Tue Jan 13 2026)
+
+#### 🐛 Bug Fix
+
+- add more weather [#3](https://github.com/Hedgehog-Aviation/container-fxjzmxe/pull/3) ([@Hedgehog-Aviation](https://github.com/Hedgehog-Aviation))
+
+#### Authors: 1
+
+- [@Hedgehog-Aviation](https://github.com/Hedgehog-Aviation)
+
+---
+
 # v0.0.6 (Tue Jan 13 2026)
 
 #### 🐛 Bug Fix
