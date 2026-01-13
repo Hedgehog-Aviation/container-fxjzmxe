@@ -1,38 +1,54 @@
 from flask import Flask, render_template
 import requests
+from datetime import datetime
 
 app = Flask(__name__)
 
-# HARD-CODED OpenWeather API key
-API_KEY = "5cbdeae736ae6506deef3455b4c1f1f2"
-
-# Hope Valley, UK coordinates
 LAT = 53.3483
 LON = -1.7428
 
 @app.route("/")
 def index():
-    url = (
-        f"https://api.openweathermap.org/data/2.5/onecall"
-        f"?lat={LAT}&lon={LON}"
-        f"&exclude=current,minutely,hourly,alerts"
-        f"&units=metric"
-        f"&appid={API_KEY}"
-    )
-
-    response = requests.get(url)
-    data = response.json()
-
+    error = None
     forecast = []
-    for day in data.get("daily", []):
-        forecast.append({
-            "temp_min": day["temp"]["min"],
-            "temp_max": day["temp"]["max"],
-            "wind_speed": day.get("wind_speed", 0),
-            "rain": day.get("rain", 0)
-        })
 
-    return render_template("index.html", forecast=forecast)
+    try:
+        url = (
+            "https://api.open-meteo.com/v1/forecast"
+            f"?latitude={LAT}"
+            f"&longitude={LON}"
+            "&daily=temperature_2m_min,temperature_2m_max,"
+            "precipitation_sum,windspeed_10m_max"
+            "&timezone=Europe/London"
+        )
+
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()  # HTTP errors
+
+        data = response.json()
+
+        if "daily" not in data:
+            raise ValueError(f"Unexpected API response: {data}")
+
+        daily = data["daily"]
+
+        for i in range(len(daily["time"])):
+            forecast.append({
+                "date": datetime.fromisoformat(daily["time"][i]).strftime("%A, %d %b"),
+                "temp_min": daily["temperature_2m_min"][i],
+                "temp_max": daily["temperature_2m_max"][i],
+                "wind_speed": daily["windspeed_10m_max"][i],
+                "rain": daily["precipitation_sum"][i]
+            })
+
+    except Exception as e:
+        error = str(e)
+
+    return render_template(
+        "index.html",
+        forecast=forecast,
+        error=error
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
