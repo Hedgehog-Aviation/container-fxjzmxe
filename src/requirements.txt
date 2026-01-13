@@ -5,3 +5,4 @@ gunicorn
 PyMySQL
 coloredlogs
 python-dotenv
+requests
