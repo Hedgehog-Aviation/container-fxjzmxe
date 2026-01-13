@@ -4,18 +4,36 @@
     <title>Hope Valley Weather</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
-        .day { margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc; }
+        .day {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .error {
+            background-color: #ffe0e0;
+            border: 1px solid #cc0000;
+            padding: 15px;
+            color: #900;
+        }
     </style>
 </head>
 <body>
     <h1>7-Day Weather Forecast for Hope Valley, UK</h1>
 
-    {% for d in forecast %}
-        <div class="day">
-            <p><strong>Temperature:</strong> {{ d.temp_min }}°C – {{ d.temp_max }}°C</p>
-            <p><strong>Wind Speed:</strong> {{ d.wind_speed }} m/s</p>
-            <p><strong>Rain:</strong> {{ d.rain }} mm</p>
+    {% if error %}
+        <div class="error">
+            <strong>Error loading weather data:</strong><br>
+            {{ error }}
         </div>
-    {% endfor %}
+    {% else %}
+        {% for d in forecast %}
+            <div class="day">
+                <h3>{{ d.date }}</h3>
+                <p><strong>Temperature:</strong> {{ d.temp_min }}°C – {{ d.temp_max }}°C</p>
+                <p><strong>Wind Speed:</strong> {{ d.wind_speed }} km/h</p>
+                <p><strong>Rain:</strong> {{ d.rain }} mm</p>
+            </div>
+        {% endfor %}
+    {% endif %}
 </body>
 </html>
