@@ -1,10 +1,21 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hope Valley Weather</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .day { margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>7-Day Weather Forecast for Hope Valley, UK</h1>
 
-
-{% block header %}
-    HeaderGGGGGGG
-{% endblock header %}
-
-{% block content %}
-    ContentGGGGGGG
-{% endblock %}
+    {% for d in forecast %}
+        <div class="day">
+            <p><strong>Temperature:</strong> {{ d.temp_min }}°C – {{ d.temp_max }}°C</p>
+            <p><strong>Wind Speed:</strong> {{ d.wind_speed }} m/s</p>
+            <p><strong>Rain:</strong> {{ d.rain }} mm</p>
+        </div>
+    {% endfor %}
+</body>
+</html>
